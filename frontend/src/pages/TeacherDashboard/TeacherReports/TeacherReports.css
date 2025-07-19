@@ -1,0 +1,109 @@
+.container {
+  max-width: 850px;
+  margin: 40px auto;
+  padding: 30px 10px 80px 10px;
+  background: #f7faff;
+}
+
+.page-heading {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 30px;
+}
+
+.no-exam-text {
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.exam-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exam-box {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: 0.2s ease;
+}
+.exam-box:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.top-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  justify-content: space-between; 
+}
+
+.exam-number {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.exam-detail {
+  flex-grow: 1;
+}
+.exam-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1e3a8a;
+}
+.exam-date {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.exam-desc {
+  font-size: 0.95rem;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.btn {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.normal-btn {
+  background: #f1f5ff;
+  border: 1px solid #cbd5e1;
+  color: #1e3a8a;
+}
+.normal-btn:hover {
+  background: #e1eafe;
+  border-color: #a0b6f9;
+}
+
+.blue-btn {
+  background: #2563eb;
+  color: white;
+  border: 1px solid #1e40af;
+}
+.blue-btn:hover {
+  background: #1d4ed8;
+}

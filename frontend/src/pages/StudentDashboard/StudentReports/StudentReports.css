@@ -1,0 +1,86 @@
+.student-container {
+  max-width: 850px;
+  margin: 40px auto;
+  padding: 30px 10px 80px 10px;
+  background: #f7faff;
+  border-radius: 20px;
+}
+
+.student-page-heading {
+  font-size: 2rem;
+  color: #4c40f7;
+  margin-bottom: 1.5rem;
+}
+
+.student-exam-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.student-no-exam-text {
+  font-size: 1.1rem;
+  color: #888;
+}
+
+.student-exam-box {
+  background-color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.student-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.student-exam-number {
+  font-weight: bold;
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}
+
+.student-exam-detail {
+  flex-grow: 1;
+}
+
+.student-exam-title {
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.student-exam-desc {
+  font-size: 1rem;
+  color: #666;
+}
+
+.student-exam-date {
+  font-size: 0.95rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.student-button-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.student-btn {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 8px;
+}
+
+.student-normal-btn {
+  background-color: #ddd;
+  color: #000;
+}
+
+.student-blue-btn {
+  background-color: #4c40f7;
+  color: #fff;
+}

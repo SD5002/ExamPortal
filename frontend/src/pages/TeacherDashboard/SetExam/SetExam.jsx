@@ -1,0 +1,337 @@
+import { useState } from "react";
+import "./SetExam.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+function SetExam() {
+  const [showModal, setShowModal] = useState(false);
+  const [examSecurity, setExamSecurity] = useState({ code: "", password: "" });
+  const [error, setError] = useState(""); 
+  const navigate = useNavigate();
+
+  const [questions, setQuestions] = useState([
+    {
+      question: "",
+      type: "MCQ",
+      options: ["", "", ""],
+      correctAnswer: "",
+      marks: 4,
+      negativeMarks: -1,
+      unattemptedMarks: 0,
+    },
+  ]);
+
+  const [examInfo, setExamInfo] = useState({
+    title: "",
+    description: "",
+    totalMarks: 0,
+    correctMarks: 4,
+    incorrectMarks: -1,
+    unattemptedMarks: 0,
+  });
+
+  const handleQuestionChange = (index, field, value) => {
+    const updated = [...questions];
+    updated[index][field] = value;
+    setQuestions(updated);
+  };
+
+  const handleOptionChange = (qIndex, oIndex, value) => {
+    const updated = [...questions];
+    updated[qIndex].options[oIndex] = value;
+    setQuestions(updated);
+  };
+
+  const addOption = (qIndex) => {
+    const updated = [...questions];
+    if (updated[qIndex].options.length < 5) {
+      updated[qIndex].options.push("");
+      setQuestions(updated);
+    }
+  };
+
+  const addQuestion = () => {
+    setQuestions([
+      ...questions,
+      {
+        question: "",
+        type: "MCQ",
+        options: ["", "", ""],
+        correctAnswer: "",
+        marks: examInfo.correctMarks,
+        negativeMarks: examInfo.incorrectMarks,
+        unattemptedMarks: examInfo.unattemptedMarks,
+      },
+    ]);
+  };
+  const validateExamData = () => {
+    if (!examInfo.title.trim()) return "Exam title is required.";
+    if (!examInfo.description.trim()) return "Exam description is required.";
+    if (!examSecurity.code.trim()) return "Exam code is required.";
+    if (!examSecurity.password.trim()) return "Password is required.";
+
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      if (!q.question.trim()) return `Question ${i + 1} is required.`;
+      if (q.type === "MCQ") {
+        if (q.options.some((opt) => !opt.trim()))
+          return `All options must be filled for Question ${i + 1}.`;
+        if (!q.correctAnswer.trim())
+          return `Correct answer is required for Question ${i + 1}.`;
+      } else if (q.type === "NAT") {
+        if (!q.correctAnswer.trim())
+          return `Correct numerical answer is required for Question ${i + 1}.`;
+      }
+    }
+
+    return null; 
+};
+
+  const handleSubmit = () => {
+    const validationError = validateExamData();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+    const total = questions.reduce((acc, curr) => acc + (curr.marks || 0), 0);
+    const updatedExamInfo = {
+      ...examInfo,
+      totalMarks: total,
+      code: examSecurity.code,
+      password: examSecurity.password,
+    };
+    setExamInfo(updatedExamInfo);
+
+    const payload = {
+      exam: {
+        ...updatedExamInfo,
+        questions,
+      },
+    };
+
+    axios
+      .post("http://localhost:3002/professor/uploadExam", payload, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        alert("Exam Created");
+        navigate("/teacher-dashboard");
+        setShowModal(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        const backendError = err.response?.data?.error || "Failed to upload exam";
+        setError(backendError);
+      });
+  };
+
+  return (
+    <div className="set-exam-wrapper">
+      <div className="set-exam-container">
+        <h2>Create New Exam</h2>
+
+        <form className="exam-form">
+          <label>Exam Title</label>
+          <input
+            type="text"
+            placeholder="Exam Title"
+            value={examInfo.title}
+            onChange={(e) =>
+              setExamInfo({ ...examInfo, title: e.target.value })
+            }
+            required
+          />
+
+          <label>Description</label>
+          <textarea
+            placeholder="Description"
+            value={examInfo.description}
+            onChange={(e) =>
+              setExamInfo({ ...examInfo, description: e.target.value })
+            }
+            required
+          />
+
+          <h3>Questions</h3>
+          {questions.map((q, index) => (
+            <div key={index} className="question-block">
+              <label>Question {index + 1}</label>
+              <textarea
+                placeholder="Enter your question"
+                value={q.question}
+                onChange={(e) =>
+                  handleQuestionChange(index, "question", e.target.value)
+                }
+                required
+              />
+
+              <div className="question-type">
+                <label>Type</label>
+                <select
+                  value={q.type}
+                  onChange={(e) =>
+                    handleQuestionChange(index, "type", e.target.value)
+                  }
+                >
+                  <option value="MCQ">MCQ</option>
+                  <option value="NAT">Numerical</option>
+                </select>
+              </div>
+
+              <div className="marking-scheme">
+                <div className="mark-box green">
+                  <label>Marks</label>
+                  <input
+                    type="number"
+                    value={q.marks}
+                    onChange={(e) =>
+                      handleQuestionChange(index, "marks", +e.target.value)
+                    }
+                    required
+                  />
+                </div>
+                <div className="mark-box red">
+                  <label>Negative</label>
+                  <input
+                    type="number"
+                    value={q.negativeMarks}
+                    onChange={(e) =>
+                      handleQuestionChange(index, "negativeMarks", +e.target.value)
+                    }
+                    required
+                  />
+                </div>
+                <div className="mark-box gray">
+                  <label>Unattempted</label>
+                  <input
+                    type="number"
+                    value={q.unattemptedMarks}
+                    onChange={(e) =>
+                      handleQuestionChange(index, "unattemptedMarks", +e.target.value)
+                    }
+                    required
+                  />
+                </div>
+              </div>
+
+              {q.type === "MCQ" && (
+                <div className="options-section">
+                  {q.options.map((opt, i) => (
+                    <div key={i}>
+                      <label>Option {i + 1}</label>
+                      <input
+                        type="text"
+                        placeholder={`Option ${i + 1}`}
+                        value={opt}
+                        onChange={(e) =>
+                          handleOptionChange(index, i, e.target.value)
+                        }
+                        required
+                      />
+                    </div>
+                  ))}
+                  {q.options.length < 5 && (
+                    <button
+                      type="button"
+                      className="small-btn"
+                      onClick={() => addOption(index)}
+                    >
+                      + Add Option
+                    </button>
+                  )}
+
+                  <div className="correct-ans-label">
+                    <label>Correct Answer</label>
+                  </div>
+
+                  <select
+                    value={q.correctAnswer}
+                    required
+                    onChange={(e) =>
+                      handleQuestionChange(index, "correctAnswer", e.target.value)
+                    }
+                  >
+                    <option value="">Select Correct Option</option>
+                    {q.options.map((opt, i) => (
+                      <option key={i} value={opt}>
+                        Option {i + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {q.type === "NAT" && (
+                <div>
+                  <label>Correct Answer</label>
+                  <input
+                    type="text"
+                    placeholder="Enter correct numerical answer"
+                    value={q.correctAnswer}
+                    onChange={(e) =>
+                      handleQuestionChange(index, "correctAnswer", e.target.value)
+                    }
+                    required
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+
+          <div className="form-buttons">
+            <button type="button" className="add-q-btn" onClick={addQuestion}>
+              + Add Question
+            </button>
+            <button
+              type="button"
+              className="submit-btn"
+              onClick={() => setShowModal(true)}
+            >
+              Submit Exam
+            </button>
+          </div>
+        </form>
+
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>Set Exam Code & Password</h3>
+
+              <div className="err-div" style={{ color: "red" }}>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+              </div>
+
+              <label>Exam Code</label>
+              <input
+                type="text"
+                value={examSecurity.code}
+                onChange={(e) =>
+                  setExamSecurity({ ...examSecurity, code: e.target.value })
+                }
+              />
+              <label>Password</label>
+              <input
+                type="password"
+                value={examSecurity.password}
+                onChange={(e) =>
+                  setExamSecurity({ ...examSecurity, password: e.target.value })
+                }
+              />
+
+              <div className="modal-buttons">
+                <button className="small-btn" onClick={handleSubmit}>
+                  Confirm
+                </button>
+                <button className="small-btn" onClick={() =>{ setShowModal(false); setError('')}}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default SetExam;

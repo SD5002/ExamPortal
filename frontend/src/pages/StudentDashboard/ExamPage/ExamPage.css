@@ -1,0 +1,223 @@
+.exam-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+}
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+.exam-info h2 {
+  font-size: 24px;
+  color: #1e3a8a;
+  margin: 0;
+}
+.exam-info p {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+.progress-container {
+  flex: 1;
+  margin: 0 30px;
+  text-align: center;
+}
+.progress-bar {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+.progress-fill {
+  height: 6px;
+  background-color: #4f46e5;
+  transition: width 0.3s ease;
+}
+.mark-buttons {
+  display: flex;
+  gap: 10px;
+}
+.mark-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1f2937;
+  cursor: pointer;
+}
+.mark-btn.gray {
+  background: #f3f4f6;
+}
+.start-section {
+  text-align: center;
+  padding: 50px;
+}
+.start-section h1 {
+  font-size: 28px;
+  color: #1d4ed8;
+}
+.start-section p {
+  font-size: 16px;
+  color: #6b7280;
+}
+.start-btn {
+  margin-top: 30px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.start-btn:hover {
+  background-color: #4338ca;
+}
+.question-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 100%;
+}
+.question-box {
+  background-color: #f9fafb;
+  padding: 30px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+}
+.question-box h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #1e293b;
+}
+.question-text {
+  font-size: 18px;
+  color: #111827;
+  margin-bottom: 10px;
+}
+.question-box hr {
+  border: none;
+  height: 2px;
+  background-color: #e5e7eb;
+  margin: 20px 0;
+}
+
+.marks-info {
+  font-size: 15px;
+  color: #374151;
+  margin-bottom: 12px;
+  background: #eef2ff;
+  padding: 8px 13px;
+  border-radius: 8px;
+  display: inline-block;
+  gap: 10px;
+}
+.marks-info span { margin-right: 7px; }
+
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.option-label {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 16px;
+  color: #1f2937;
+}
+.option-label.selected {
+  border-left: 4px solid #4f46e5;
+  background: #eef2ff;
+}
+.option-label:hover {
+  background: #f3f4f6;
+}
+.option-label input {
+  margin-right: 12px;
+  accent-color: #4f46e5;
+}
+.nat-input {
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background-color: #f1f5f9;
+  transition: border-color 0.2s ease;
+}
+.nat-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  background-color: #fff;
+}
+.navigation-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 220px;
+  right: 220px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  z-index: 100;
+}
+.nav-btn,
+.submit-btn {
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #4f46e5;
+  color: white;
+}
+.nav-btn:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+.submit-btn:hover,
+.nav-btn:hover:not(:disabled) {
+  background-color: #4338ca;
+}
+.error-box {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 600px;
+  font-size: 18px;
+}
+.clear-btn {
+  margin-top: 1rem;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+.clear-btn:hover {
+  background-color: #d32f2f;
+}
