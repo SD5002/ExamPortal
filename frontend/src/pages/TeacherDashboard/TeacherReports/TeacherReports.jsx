@@ -14,7 +14,7 @@ const TeacherReports = () => {
       .catch(() => setExams([]));
   }, []);
 
-  return (
+  return (  
     <div className="container">
       <h1 className="page-heading">&#128203; Exam Reports</h1>
 

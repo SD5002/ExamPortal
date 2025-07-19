@@ -1,0 +1,76 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import "./StudentQuestionPaper.css";
+
+const StudentQuestionPaper = () => {
+  const { examId } = useParams();
+  const [response, setResponse] = useState(null);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3002/student/getResponse/${examId}`, { withCredentials: true })
+      .then((res) => setResponse(res.data.responses || null))
+      .catch(() => alert("Failed to load exam response."));
+  }, [examId]);
+
+  if (!response) return <div className="student-question-paper-container"><p>Loading...</p></div>;
+
+  const { exam, answers } = response;
+  const totalMarks = exam.questions.reduce((sum, q) => sum + (q.marks || 0), 0);
+
+  return (
+    <div className="student-question-paper-container">
+      <h1 className="student-question-paper-title">{exam.title}</h1>
+      <p className="student-question-paper-line"><strong>Description:</strong> {exam.description}</p>
+      <p className="student-question-paper-line"><strong>Score:</strong> {totalMarks}</p>
+
+      <div className="student-question-paper-list">
+        {exam.questions.map((q, index) => {
+          const userAnswerObj = answers.find(ans => ans.questionId === q._id);
+          const userAnswer = userAnswerObj?.selectedAnswer;
+
+          let status = "unattempted";
+          if (userAnswer === q.correctAnswer) status = "correct";
+          else if (userAnswer) status = "wrong";
+
+          return (
+            <div key={index} className="student-question-paper-box">
+              <div className="student-question-paper-question">Q.{index + 1} {q.question}</div>
+              <div className="student-question-paper-marks">
+                Marks: <b>{q.marks}</b> | Negative: <b>{q.negativeMarks}</b> | Unattempted: <b>{q.unattemptedMarks}</b>
+              </div>
+
+              {q.type === "MCQ" ? (
+                <div className="student-question-paper-options">
+                  {q.options.map((opt, i) => (
+                    <label key={i} className={`student-question-paper-option
+                      ${opt === q.correctAnswer ? "right" : ""}
+                      ${opt === userAnswer && opt !== q.correctAnswer ? "wrong" : ""}
+                    `}>
+                      <input type="radio" checked={userAnswer === opt} disabled />
+                      {opt}
+                    </label>
+                  ))}
+                </div>
+              ) : (
+                <p className="student-question-paper-text-answer">
+                  Correct Answer: <b>{q.correctAnswer}</b>
+                </p>
+              )}
+
+              <div className={`student-question-paper-your-answer ${status}`}>
+                Your Answer: <b>{userAnswer || "Not Attempted"}</b> {" "}
+                {status === "correct" && <span>+{q.marks}</span>}
+                {status === "wrong" && <span>-{q.negativeMarks}</span>}
+                {status === "unattempted" && <span>+{q.unattemptedMarks}</span>}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default StudentQuestionPaper;

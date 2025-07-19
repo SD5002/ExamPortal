@@ -27,7 +27,7 @@ const StudentReports = () => {
           exams.map((exam, index) => (
             <div className="student-exam-box" key={exam.examId}>
               <div className="student-top-row">
-                <span className="student-exam-number">{index + 1}.</span>
+                <div className="student-exam-number">{index + 1}.</div>
                 <div className="student-exam-detail">
                   <h2 className="student-exam-title">{exam.title}</h2>
                   <p className="student-exam-desc">By Professor {exam.professor}</p>
@@ -47,7 +47,7 @@ const StudentReports = () => {
                 <button
                   className="student-btn student-normal-btn"
                   onClick={() =>
-                    navigate(`/student-dashboard/reports/questionPaper/${exam.examId}`)
+                    navigate(`/student-dashboard/reports/responses/${exam.examId}`)
                   }
                 >
                   View Question Paper

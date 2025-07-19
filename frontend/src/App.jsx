@@ -23,6 +23,8 @@ import ViewQuestionPaper from './pages/TeacherDashboard/TeacherReports/ViewQuest
 import ExamAnalysis from './pages/TeacherDashboard/TeacherReports/ExamAnalysis.jsx';
 import MyAccountModal from './pages/TeacherDashboard/MyAccountPage/MyAccountPage.jsx';
 import StudentReports from './pages/StudentDashboard/StudentReports/StudentReports.jsx';
+import StudentQuestionPaper from './pages/StudentDashboard/StudentReports/StudentQuestionPaper/StudentQuestionPaper.jsx';
+
 
 
 function App() {
@@ -56,6 +58,7 @@ function App() {
         > 
           <Route path="" element={<StudentHome/>} />
           <Route path="reports" element={<StudentReports />} />
+          <Route path="reports/responses/:examId" element={<StudentQuestionPaper />} />
         </Route>
 
 
