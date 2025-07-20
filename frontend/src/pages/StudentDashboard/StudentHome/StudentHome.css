@@ -21,6 +21,10 @@
   transition: 0.3s;
 }
 
+.card-student.activities li {
+  margin-bottom: 2rem;
+}
+
 .profile {
   width: 40%;
   display: flex;
@@ -180,4 +184,79 @@
 
 .calendar {
   width: 30%;
+}
+
+.exam-join-err{
+  color:red;
+  border:1px solid red;
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+  margin-top: 0.5rem
+
+}
+
+
+@media (max-width: 768px) {
+  .student-home {
+    padding: 16px;
+  }
+
+  .row,
+  .down-row-student {
+    flex-direction: column;
+  }
+
+  .profile,
+  .time-card,
+  .exam-join-box,
+  .left-column,
+  .stats-student,
+  .student-marks,
+  .total-submissions-student {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .calendar{
+    display:none
+  }
+  .time-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .exam-join-form-student {
+    flex-direction: column;
+  }
+
+  .time-box {
+    font-size: 1.4rem;
+  }
+
+  .marks-table th,
+  .marks-table td {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .total-submissions-student p {
+    font-size: 2.4rem;
+  }
+
+  .student-exam-join {
+    font-size: 0.95rem;
+    padding: 8px;
+  }
+
+  .details h2 {
+    font-size: 1.1rem;
+  }
+
+  .details p {
+    font-size: 0.9rem;
+  }
 }

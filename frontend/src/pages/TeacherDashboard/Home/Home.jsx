@@ -25,7 +25,6 @@ useEffect(() => {
           latestExam: res.data.latestExam,
           emailId: res.data.emailId
         });
-        console.log("Stats loaded:", res.data);
       })
       .catch((err) => {
         console.error("Failed to load stats:", err);
@@ -48,10 +47,7 @@ useEffect(() => {
             <div className="professor-details">
               <h2>Welcome, Professor {"\uD83D\uDC4B"}</h2>
               <p>Email ID : {stats.emailId}</p>
-              <p>
-                You have created <strong>{stats.totalExams} exams</strong> with{" "}
-                <strong>{stats.totalSubmissions} submissions</strong>.
-              </p>
+              
             </div>
           </div>
         </div>

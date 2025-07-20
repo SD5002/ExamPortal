@@ -2,8 +2,8 @@
   width: 100%;
   border-bottom: 1px solid #ccc;
   height: 4.5rem;
-  display: flex;              /* ✅ Make sure navbar is a flexbox */
-  align-items: center;        /* ✅ Vertical center content in navbar */
+  display: flex;              
+  align-items: center;       
 }
 
 
@@ -66,4 +66,11 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+}
+.not-found-page{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color:red;
 }

@@ -12,11 +12,15 @@ const StudentQuestionPaper = () => {
       .get(`http://localhost:3002/student/getResponse/${examId}`, { withCredentials: true })
       .then((res) => {
         setResponse(res.data.responses || null);
+        console.log(res.data.responses);
       })
       .catch(() => alert("Failed to load exam response."));
   }, [examId]);
 
-  if (!response) return <div>Loading...</div>;
+  if (!response || !response.exam || !Array.isArray(response.exam.questions)) {
+      return <div>Loading...</div>;
+    }
+
 
   const { exam, answers,score } = response;
 
@@ -31,8 +35,7 @@ const StudentQuestionPaper = () => {
           
           const matchedAnswer = answers.find(a => a.questionId === q._id);
           const userAnswer = matchedAnswer?.selectedAnswer;
-          console.log(userAnswer);
-
+          
           let status = "wronge";
           if (userAnswer === q.correctAnswer) status = "right";
           else if (userAnswer === 'unattempted') status = "unattempted";

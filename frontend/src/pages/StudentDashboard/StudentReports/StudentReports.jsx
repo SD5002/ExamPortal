@@ -10,9 +10,7 @@ const StudentReports = () => {
   useEffect(() => {
     axios
       .get("http://localhost:3002/student/getReports", { withCredentials: true })
-      .then((res) => {setExams(res.data.data || []);
-                      console.log(res.data.data);
-      })
+      .then((res) => {setExams(res.data.data || []);})
       .catch(() => setExams([]));
   }, []);
 

@@ -46,7 +46,7 @@ export const uploadExam = wrapAsync(async (req, res, next) => {
   const now = new Date();
   const istDateTime = new Intl.DateTimeFormat('en-IN', DATE_FORMAT_OPTIONS).format(now);
 
-  user.history.push({ message: "Exam named " + exam.title + " with code " + exam.code + " and password :" + exam.password + " was uploaded successfully at " + istDateTime + "."});
+  user.history.push({ message: "Exam named " + exam.title + " with code : " + exam.code + " and password :" + exam.password + " was uploaded successfully at " + istDateTime + "."});
 
   await user.save({ validateBeforeSave: false });
 
@@ -85,7 +85,7 @@ export const getExams = wrapAsync(async (req, res, next) => {
 export const getExam = wrapAsync(async (req, res, next) => {
   const { examId } = req.params;
   const exam = await Exam.findById(examId);
-  console.log(exam);
+
   if (!exam) return next(new ExpressError(404, "Invalid exam id"));
   res.status(200).json({ exam: exam });
 });

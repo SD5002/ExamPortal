@@ -123,8 +123,7 @@ export const submitExam = wrapAsync(async (req, res, next) => {
       return next(new ExpressError(400, "User has not joined this exam."));
 
      const {responses}=req.body;
-     console.log(responses);
-     console.log(Object.keys(responses).length,);
+ 
      
      if(Object.keys(responses).length!=exam.questions.length) return next(new ExpressError(400, "Invalid number of responses, Try to contact your professor."));
 
@@ -157,7 +156,7 @@ export const submitExam = wrapAsync(async (req, res, next) => {
       }
 
     
-    console.log("Marks:",marks);
+   
 
     const examWithProf = await Exam.findById(examId).populate("professor", "name");
     const profName = examWithProf.professor.name;
@@ -170,7 +169,7 @@ export const submitExam = wrapAsync(async (req, res, next) => {
     await studentResponses.save();
 
     user.history.push({
-      message : "You have submitted exam named: " + exam.title + " at " + new Date().toLocaleString('en-IN', DATE_FORMAT_OPTIONS),
+      message : "You have submitted exam named " + exam.title + " at " + new Date().toLocaleString('en-IN', DATE_FORMAT_OPTIONS),
       createdAt: new Date(),
      });
      res.status(200).json({
@@ -231,7 +230,7 @@ export const getResponses = wrapAsync(async (req, res, next) => {
     match: { exam: examId },
     populate: {
       path: "exam",
-      select: "title totalMarks"
+      select: "title totalMarks professor questions",
     }
   });
 

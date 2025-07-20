@@ -85,7 +85,7 @@ const ExamPage = () => {
       selectedAnswer: responses[q._id] || "unattempted",
     }));
 
-    console.log(formattedResponses);
+    
 
     axios
       .post(

@@ -3,7 +3,7 @@ import './AuthPage.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 
 function RegisterPage() {
   const [formData, setFormData] = useState({

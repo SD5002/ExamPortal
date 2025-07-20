@@ -1,13 +1,11 @@
-import Navbar from '../components/Navbar';
+import Navbar from '../../components/Navbar';
 import './WelcomePage.css';
 import {  useNavigate } from 'react-router-dom';
 
 
 function WelcomePage() {
   const navigate=useNavigate();
-  return (
-    
-      
+  return (     
       <>
       <Navbar/>
        <div className="main-box">

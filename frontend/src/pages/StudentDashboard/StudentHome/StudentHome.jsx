@@ -13,6 +13,7 @@ function StudentHome() {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState(""); 
   const {user}=useContext(AuthContext);
+  const [error,setError]=useState('');
   const [quickReportsForHome, setQuickReportsForHome] = useState({
     totalSubmissions: 0,
     topThreeArray: [],
@@ -28,9 +29,7 @@ function StudentHome() {
    useEffect(() => {
     axios
       .get("http://localhost:3002/student/quickReportsForStudentHome", { withCredentials: true })
-      .then((res) => {setQuickReportsForHome(res.data);
-                      console.log(res.data);
-       })
+      .then((res) => {setQuickReportsForHome(res.data); })
       .catch((err) =>console.log(err));
   }, []);
 
@@ -47,7 +46,7 @@ function StudentHome() {
     })
     .catch((err) => {
       if (err.response && err.response.data && err.response.data.error) {
-        alert(err.response.data.error); 
+        setError(err.response.data.error); 
       } else {
         alert("An error occurred");
       }
@@ -79,9 +78,11 @@ function StudentHome() {
           <div className="exam-join-box">
         
             <form onSubmit={handleSubmit} className="exam-join-form-student">
+              {error && <div className="exam-join-err">{error}</div>}
               <input type="text" placeholder="Enter Exam Code" value={code} onChange={(e) => setCode(e.target.value)} required />
               <input type="text" placeholder="Enter Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
               <button type="submit" className="btn student-exam-join">Join</button>
+        
             </form>
           </div>
         </div>

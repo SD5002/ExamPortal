@@ -1,13 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import WelcomePage from './pages/WelcomePage';
-import StudentDashboard from './pages/StudentDashboard/StudentNavbar/StudentNavbar.jsx'; 
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import Unauthorized from './pages/Unauthorized';
+import WelcomePage from './pages/WelcomePage/WelcomePage.jsx';
+import LoginPage from './pages/LoginAndRegisterPages/LoginPage.jsx';
+import RegisterPage from './pages/LoginAndRegisterPages/RegisterPage.jsx';
+import Unauthorized from './pages/UnauthorizedPage/Unauthorized.jsx';
 import Home from './pages/TeacherDashboard/Home/Home';
 import SetExam from './pages/TeacherDashboard/SetExam/SetExam.jsx';
-
 import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import './App.css';
@@ -21,7 +18,7 @@ import ThankYouPage from './pages/StudentDashboard/ThankYouPage.jsx';
 import TeacherReports from './pages/TeacherDashboard/TeacherReports/TeacherReports.jsx';
 import ViewQuestionPaper from './pages/TeacherDashboard/TeacherReports/ViewQuestionPaper.jsx';
 import ExamAnalysis from './pages/TeacherDashboard/TeacherReports/ExamAnalysis.jsx';
-import MyAccountModal from './pages/TeacherDashboard/MyAccountPage/MyAccountPage.jsx';
+import MyAccountPage from './pages/MyAccountPage/MyAccountPage.jsx';
 import StudentReports from './pages/StudentDashboard/StudentReports/StudentReports.jsx';
 import StudentQuestionPaper from './pages/StudentDashboard/StudentReports/StudentQuestionPaper/StudentQuestionPaper.jsx';
 
@@ -59,6 +56,7 @@ function App() {
           <Route path="" element={<StudentHome/>} />
           <Route path="reports" element={<StudentReports />} />
           <Route path="reports/responses/:examId" element={<StudentQuestionPaper />} />
+          <Route path="account" element={<MyAccountPage />} />
         </Route>
 
 
@@ -78,7 +76,7 @@ function App() {
           <Route path="reports" element={<TeacherReports />} />
           <Route path="reports/questionPaper/:examId" element={<ViewQuestionPaper />} />
           <Route path="reports/analysis/:examId" element={<ExamAnalysis />} />
-          <Route path="account" element={<MyAccountModal />} />
+          <Route path="account" element={<MyAccountPage />} />
           
         </Route>
 
@@ -99,11 +97,18 @@ function App() {
                 </ProtectedRoute>
               }
             />
+         
 
+         <Route 
+           path="*"
+           element={<h1 className='not-found-page'>404 Page not found</h1>}
+         />
 
              </Routes>
       </AuthProvider>
     </ExamProvider>
+
+
     
   );
 }

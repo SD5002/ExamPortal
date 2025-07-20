@@ -25,3 +25,9 @@
   color: #333;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .my-account-container {
+    align-items: flex-start;
+  }
+}

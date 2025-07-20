@@ -62,3 +62,53 @@
 .student-logout-button:hover {
   background-color: #372fc2;
 }
+
+
+.student-navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.menu-icon{
+  display:none;
+}
+
+
+@media (max-width: 768px) {
+  .student-nav-container {
+    padding: 0 1rem;
+  }
+  .menu-icon {
+    display: block;
+  }
+
+  .student-navbar-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .student-navbar-links.open {
+    display: flex;
+  }
+
+  .student-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .student-navbar-logo {
+    font-size: 1.2rem;
+  }
+
+  .student-nav-link,
+  .student-logout-button {
+    width: 100%;
+    text-align: left;
+  }
+}

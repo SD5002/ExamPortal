@@ -93,6 +93,12 @@
   color: #333;
 }
 
+.activity-box li {
+  margin-bottom: 1rem;
+}
+
+
+
 .stats-section {
   width: 100%;
 }
@@ -148,4 +154,76 @@
 
 .stat-card .latest-exam-quick-stats{
   color:#372fc2
+}
+
+
+@media (max-width: 768px) {
+  .dashboard-wrapper {
+    margin: 2rem 1rem;
+  }
+
+  .top-section {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .welcome-box,
+  .create-exam-box {
+    padding: 1.2rem;
+    border-radius: 15px;
+  }
+
+  .create-exam-box button {
+    width: 100%;
+  }
+
+  .activity-box {
+    padding: 1.2rem;
+    border-radius: 15px;
+  }
+
+  .activity-box li{
+    color:#787878
+  }
+
+  .stats-cards {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.2rem;
+    border-radius: 15px;
+  }
+
+  .professor-avatar {
+    font-size: 2.5rem;
+    padding: 0.4rem;
+  }
+
+  .professor-details h2 {
+    font-size: 1.4rem;
+  }
+
+  .professor-details p {
+    font-size: 0.95rem;
+  }
+
+  .create-exam-box h3,
+  .activity-box h3,
+  .stats-box h3 {
+    font-size: 1.1rem;
+  }
+
+  .stat-card h4 {
+    font-size: 1.6rem;
+  }
+
+  .stat-card p {
+    font-size: 0.95rem;
+  }
+
+  .stat-card .latest-exam-quick-stats {
+    font-size: 0.95rem;
+  }
 }
