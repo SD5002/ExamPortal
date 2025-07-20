@@ -10,29 +10,32 @@ const StudentQuestionPaper = () => {
   useEffect(() => {
     axios
       .get(`http://localhost:3002/student/getResponse/${examId}`, { withCredentials: true })
-      .then((res) => setResponse(res.data.responses || null))
+      .then((res) => {
+        setResponse(res.data.responses || null);
+      })
       .catch(() => alert("Failed to load exam response."));
   }, [examId]);
 
-  if (!response) return <div className="student-question-paper-container"><p>Loading...</p></div>;
+  if (!response) return <div>Loading...</div>;
 
-  const { exam, answers } = response;
-  const totalMarks = exam.questions.reduce((sum, q) => sum + (q.marks || 0), 0);
+  const { exam, answers,score } = response;
 
   return (
     <div className="student-question-paper-container">
       <h1 className="student-question-paper-title">{exam.title}</h1>
       <p className="student-question-paper-line"><strong>Description:</strong> {exam.description}</p>
-      <p className="student-question-paper-line"><strong>Score:</strong> {totalMarks}</p>
+      <p className="student-question-paper-line"><strong>Score:</strong> {score}/{exam.totalMarks}</p>
 
       <div className="student-question-paper-list">
         {exam.questions.map((q, index) => {
-          const userAnswerObj = answers.find(ans => ans.questionId === q._id);
-          const userAnswer = userAnswerObj?.selectedAnswer;
+          
+          const matchedAnswer = answers.find(a => a.questionId === q._id);
+          const userAnswer = matchedAnswer?.selectedAnswer;
+          console.log(userAnswer);
 
-          let status = "unattempted";
-          if (userAnswer === q.correctAnswer) status = "correct";
-          else if (userAnswer) status = "wrong";
+          let status = "wronge";
+          if (userAnswer === q.correctAnswer) status = "right";
+          else if (userAnswer === 'unattempted') status = "unattempted";
 
           return (
             <div key={index} className="student-question-paper-box">
@@ -46,7 +49,7 @@ const StudentQuestionPaper = () => {
                   {q.options.map((opt, i) => (
                     <label key={i} className={`student-question-paper-option
                       ${opt === q.correctAnswer ? "right" : ""}
-                      ${opt === userAnswer && opt !== q.correctAnswer ? "wrong" : ""}
+                      ${opt === userAnswer && opt !== q.correctAnswer ? "wronge" : ""}
                     `}>
                       <input type="radio" checked={userAnswer === opt} disabled />
                       {opt}
@@ -60,10 +63,18 @@ const StudentQuestionPaper = () => {
               )}
 
               <div className={`student-question-paper-your-answer ${status}`}>
-                Your Answer: <b>{userAnswer || "Not Attempted"}</b> {" "}
-                {status === "correct" && <span>+{q.marks}</span>}
-                {status === "wrong" && <span>-{q.negativeMarks}</span>}
-                {status === "unattempted" && <span>+{q.unattemptedMarks}</span>}
+                <div className="yourAns">
+                     Your Answer: <b>{userAnswer !== null && userAnswer !== undefined ? userAnswer : "Not Attempted"}</b>{" "}
+                </div>
+                <div className="added-marks"> 
+                {status === "right" && <span>{q.marks}</span>}
+                {status === "wronge" && <span>{q.negativeMarks}</span>}
+                {status === "unattempted" && <span>{q.unattemptedMarks}</span>}
+
+                
+                </div>
+
+               
               </div>
             </div>
           );

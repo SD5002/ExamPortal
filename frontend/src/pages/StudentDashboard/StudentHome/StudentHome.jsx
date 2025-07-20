@@ -4,17 +4,34 @@ import Calendar from "../../../components/Calender";
 import 'react-calendar/dist/Calendar.css';
 import "./StudentHome.css";
 import axios from "axios";
-
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
 
 function StudentHome() {
   const navigate = useNavigate();
   const [time, setTime] = useState(new Date());
   const [code, setCode] = useState("");
   const [password, setPassword] = useState(""); 
+  const {user}=useContext(AuthContext);
+  const [quickReportsForHome, setQuickReportsForHome] = useState({
+    totalSubmissions: 0,
+    topThreeArray: [],
+    recentActivities: [],
+  });
 
   useEffect(() => {
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
+  }, []);
+
+
+   useEffect(() => {
+    axios
+      .get("http://localhost:3002/student/quickReportsForStudentHome", { withCredentials: true })
+      .then((res) => {setQuickReportsForHome(res.data);
+                      console.log(res.data);
+       })
+      .catch((err) =>console.log(err));
   }, []);
 
   const handleSubmit = (event) => {
@@ -46,8 +63,8 @@ function StudentHome() {
           <div className="header">
             <div className="professor-avatar">{"\uD83D\uDC68\u200D\uD83C\uDFEB"}</div>
             <div className="details">
-              <h2>Welcome, Student {"\uD83D\uDC4B"}</h2>
-              <p>Email ID: sudeshGosaavi@gmal.com</p>
+              <h2>Welcome,{user.name} {"\uD83D\uDC4B"}</h2>
+              <p>Email ID: {user.email}</p>
             </div>
           </div>
         </div>
@@ -76,9 +93,10 @@ function StudentHome() {
           <div className="card-student activities">
             <h4>📅 Recent Activities</h4>
             <ul>
-              <li>You joined 2 exams last week</li>
-              <li>New test available: Physics</li>
-              <li>Scored 50 in Math</li>
+              {quickReportsForHome.recentActivities.length==0?<p>Not yet here</p>:
+              quickReportsForHome.recentActivities.map((activity, index) => (
+                <li key={index}>{activity.message}</li>
+              ))}
             </ul>
           </div>
 
@@ -93,21 +111,19 @@ function StudentHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Math</td>
-                    <td>50</td>
-                  </tr>
-                  <tr>
-                    <td>Physics</td>
-                    <td>45</td>
-                  </tr>
+                 { quickReportsForHome.topThreeArray.map((item, index) => (
+                    <tr key={index}>
+                      <td>{item.title}</td>
+                      <td>{item.score}/{item.totalMarks}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
 
             <div className="card-student total-submissions-student">
-              <h4> Total Submissions</h4>
-              <p>2</p>
+              <h4>Total Submissions</h4>
+              <p>{quickReportsForHome.totalSubmissions}</p>
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@
 .student-question-paper-title {
   font-size: 1.8rem;
   font-weight: bold;
-  color: #2563eb;
+   color: #509f06;
   margin-bottom: 14px;
 }
 
@@ -65,9 +65,9 @@
 }
 
 .student-question-paper-option.right {
-  background: #bbf7d0;
-  border-color: #22c55e;
-  color: #166534;
+ background: #9aff9c;
+  border-color: #10b953;
+  color: #065f25;
   font-weight: 600;
 }
 
@@ -82,17 +82,19 @@
   margin-top: 15px;
   padding: 10px;
   border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
   font-size: 1rem;
   font-weight: 500;
 }
 
-.student-question-paper-your-answer.correct {
+.student-question-paper-your-answer.right {
   background: #d1fae5;
   color: #065f46;
   border: 1px solid #10b981;
 }
 
-.student-question-paper-your-answer.wrong {
+.student-question-paper-your-answer.wronge {
   background: #fee2e2;
   color: #991b1b;
   border: 1px solid #dc2626;

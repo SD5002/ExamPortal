@@ -1,10 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./ExamPage.css";
 import { useExam } from "../../../context/ExamContext.jsx";
-import { useNavigate } from "react-router-dom";
-
 
 const ExamPage = () => {
   const { examId } = useParams();
@@ -15,40 +13,31 @@ const ExamPage = () => {
   const [currentQ, setCurrentQ] = useState(0);
 
   const navigate = useNavigate();
-
   const { examStartedRef, examIdRef, examSubmittedRef } = useExam();
 
   useEffect(() => {
     examStartedRef.current = true;
-    examIdRef.current = examId; 
+    examIdRef.current = examId;
   }, []);
 
   useEffect(() => {
     if (examId) {
-      examIdRef.current = examId; 
+      examIdRef.current = examId;
     }
   }, [examId]);
 
   useEffect(() => {
-    if (exam && exam.questions?.length) {
-      const initialResponses = {};
-      exam.questions.forEach((q, i) => {
-        initialResponses[i] = "unattempted";
-      });
-      setResponses(initialResponses);
-    }
-  }, [exam]);
-
-  useEffect(() => {
     axios
-      .get(`http://localhost:3002/student/startExam/${examId}`, { withCredentials: true })
+      .get(`http://localhost:3002/student/startExam/${examId}`, {
+        withCredentials: true,
+      })
       .then((res) => {
         const info = res.data.exam;
         setExam({
           title: info.title || "Exam Title",
           description: info.description || "No description",
           examId,
-          questions: []
+          questions: [],
         });
       })
       .catch((err) => {
@@ -63,9 +52,16 @@ const ExamPage = () => {
         withCredentials: true,
       })
       .then((res) => {
+        const questions = res.data.exam.questions;
+        const initialResponses = {};
+        questions.forEach((q) => {
+          initialResponses[q._id] = "unattempted";
+        });
+
+        setResponses(initialResponses);
         setExam((prev) => ({
           ...prev,
-          questions: res.data.exam.questions,
+          questions,
         }));
         setStarted(true);
       })
@@ -75,27 +71,36 @@ const ExamPage = () => {
   };
 
   const handleChange = (value) => {
+    const qId = exam.questions[currentQ]._id;
     setResponses((prev) => ({
       ...prev,
-      [currentQ]: value,
+      [qId]: value,
     }));
   };
 
   const handleSubmit = (e) => {
-    if (e && e.preventDefault) e.preventDefault();
+    e.preventDefault();
+    const formattedResponses = exam.questions.map((q) => ({
+      questionId: q._id,
+      selectedAnswer: responses[q._id] || "unattempted",
+    }));
+
+    console.log(formattedResponses);
+
     axios
       .post(
         `http://localhost:3002/student/submitExam/${examId}`,
-        { responses },
+        { responses: formattedResponses },
         { withCredentials: true }
       )
-      .then((res) => {
+      .then(() => {
         navigate("/student/thankyou");
         alert("Exam submitted!");
         examSubmittedRef.current = true;
       })
       .catch((err) => {
         console.log(err);
+        alert("Error submitting exam.");
       });
   };
 
@@ -146,36 +151,47 @@ const ExamPage = () => {
         <form className="question-form">
           <div className="question-box">
             <h3>Question {currentQ + 1}</h3>
-            {/* ===== Marks Info Block ===== */}
+
             <div className="marks-info">
-              <span>Marks: <b>{exam.questions[currentQ].marks ?? "-"}</b></span>
+              <span>
+                Marks: <b>{exam.questions[currentQ].marks ?? "-"}</b>
+              </span>
               <span> | </span>
-              <span>Unattempted: <b>{exam.questions[currentQ].unattemptedMarks ?? "-"}</b></span>
+              <span>
+                Unattempted: <b>{exam.questions[currentQ].unattemptedMarks ?? "-"}</b>
+              </span>
               <span> | </span>
-              <span>Negative: <b>{exam.questions[currentQ].negativeMarks ?? "-"}</b></span>
+              <span>
+                Negative: <b>{exam.questions[currentQ].negativeMarks ?? "-"}</b>
+              </span>
             </div>
-          
+
             <p className="question-text">{exam.questions[currentQ].question}</p>
             <hr />
 
             {exam.questions[currentQ].type === "MCQ" ? (
               <>
                 <div className="options">
-                  {exam.questions[currentQ].options.map((opt, i) => (
-                    <label
-                      key={i}
-                      className={`option-label ${responses[currentQ] === opt ? "selected" : ""}`}
-                    >
-                      <input
-                        type="radio"
-                        name={`question-${currentQ}`}
-                        value={opt}
-                        checked={responses[currentQ] === opt}
-                        onChange={() => handleChange(opt)}
-                      />
-                      {opt}
-                    </label>
-                  ))}
+                  {exam.questions[currentQ].options.map((opt, i) => {
+                    const qId = exam.questions[currentQ]._id;
+                    return (
+                      <label
+                        key={i}
+                        className={`option-label ${
+                          responses[qId] === opt ? "selected" : ""
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name={`question-${qId}`}
+                          value={opt}
+                          checked={responses[qId] === opt}
+                          onChange={() => handleChange(opt)}
+                        />
+                        {opt}
+                      </label>
+                    );
+                  })}
                 </div>
                 <button
                   type="button"
@@ -190,8 +206,14 @@ const ExamPage = () => {
                 type="number"
                 className="nat-input"
                 placeholder="Enter your answer"
-                value={responses[currentQ] === "unattempted" ? "" : responses[currentQ]}
-                onChange={(e) => handleChange(e.target.value || "unattempted")}
+                value={
+                  responses[exam.questions[currentQ]._id] === "unattempted"
+                    ? ""
+                    : responses[exam.questions[currentQ]._id]
+                }
+                onChange={(e) =>
+                  handleChange(e.target.value || "unattempted")
+                }
               />
             )}
           </div>

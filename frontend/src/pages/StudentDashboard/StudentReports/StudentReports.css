@@ -1,7 +1,9 @@
 .student-container {
-    max-width: 850px;
+    max-width: 950px;
   margin: 40px auto;
-  padding: 30px 10px 80px 10px;
+  padding: 30px 50px 80px 50px;
+ 
+  border-radius: 12px;
   background: #f7faff;
 }
 
@@ -29,6 +31,7 @@
   padding: 1.5rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
   transition: 0.2s ease;
+  
 }
 
 .student-exam-box:hover {

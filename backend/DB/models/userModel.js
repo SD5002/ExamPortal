@@ -40,6 +40,13 @@ const userSchema = new Schema({
       }
   ],
 
+  responses: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "ExamResponses"
+    }
+  ],
+
   createdAt: {
     type: Date,
     default: Date.now

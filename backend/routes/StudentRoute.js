@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { getReports, joinExam ,startExam,submitExam,getResponses} from "../controllers/StudentController.js";
+import { getReports, joinExam ,startExam,submitExam,getResponses,quickReportsForStudentHome} from "../controllers/StudentController.js";
 import authenticate from "../middlewares/authentication.js";
 
 router.route("/joinExam")
@@ -13,6 +13,8 @@ router.route("/getReports")
         .get(authenticate,getReports);
 router.route("/getResponse/:examId")
         .get(authenticate,getResponses);
+router.route("/quickReportsForStudentHome")        
+        .get(authenticate,quickReportsForStudentHome);
 
 export default router;
 

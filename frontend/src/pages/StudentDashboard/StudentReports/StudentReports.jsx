@@ -55,6 +55,7 @@ const StudentReports = () => {
                 <span className="student-btn student-blue-btn" >
                   Score: {exam.score}/{exam.totalMarks}
                 </span>
+                
               </div>
             </div>
           ))
