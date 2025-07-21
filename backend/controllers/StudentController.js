@@ -230,7 +230,7 @@ export const getResponses = wrapAsync(async (req, res, next) => {
     match: { exam: examId },
     populate: {
       path: "exam",
-      select: "title totalMarks professor questions",
+      select: "title totalMarks professor questions description",
     }
   });
 
