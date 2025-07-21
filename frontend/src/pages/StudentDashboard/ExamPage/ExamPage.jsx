@@ -87,9 +87,9 @@ const ExamPage = () => {
 
     
 
-    axios
+    axiosInstance
       .post(
-        `http://localhost:3002/student/submitExam/${examId}`,
+        `/student/submitExam/${examId}`,
         { responses: formattedResponses },
         { withCredentials: true }
       )

@@ -12,7 +12,7 @@ const StudentQuestionPaper = () => {
       .get(`/student/getResponse/${examId}`, { withCredentials: true })
       .then((res) => {
         setResponse(res.data.responses || null);
-        console.log(res.data.responses);
+        
       })
       .catch(() => alert("Failed to load exam response."));
   }, [examId]);
