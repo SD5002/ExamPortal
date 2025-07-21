@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./SetExam.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../../api/axiosInstance";
 
 function SetExam() {
   const [showModal, setShowModal] = useState(false);
@@ -109,8 +109,8 @@ function SetExam() {
       },
     };
 
-    axios
-      .post("http://localhost:3002/professor/uploadExam", payload, {
+    axiosInstance
+      .post("/professor/uploadExam", payload, {
         withCredentials: true,
       })
       .then((res) => {

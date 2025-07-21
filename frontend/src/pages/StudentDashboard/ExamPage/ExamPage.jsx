@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import "./ExamPage.css";
 import { useExam } from "../../../context/ExamContext.jsx";
+import axiosInstance from "../../../api/axiosInstance.js";
 
 const ExamPage = () => {
   const { examId } = useParams();
@@ -27,8 +27,8 @@ const ExamPage = () => {
   }, [examId]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3002/student/startExam/${examId}`, {
+    axiosInstance
+      .get(`/student/startExam/${examId}`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -47,8 +47,8 @@ const ExamPage = () => {
   }, [examId]);
 
   const handleStart = () => {
-    axios
-      .get(`http://localhost:3002/student/startExam/${examId}`, {
+    axiosInstance
+      .get(`/student/startExam/${examId}`, {
         withCredentials: true,
       })
       .then((res) => {

@@ -1,7 +1,7 @@
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../../../api/axiosInstance";
 function Home() {
   const navigate = useNavigate();
 
@@ -15,8 +15,8 @@ function Home() {
     });
 
 useEffect(() => {
-    axios
-      .get("http://localhost:3002/professor/getStats", { withCredentials: true })
+    axiosInstance
+      .get("/professor/getStats", { withCredentials: true })
       .then((res) => {
         setStats({
           totalExams: res.data.totalExams,

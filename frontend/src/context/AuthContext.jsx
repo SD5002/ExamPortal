@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 
 export const AuthContext = createContext();
 
@@ -18,8 +18,8 @@ export function AuthProvider({ children }) {
       return;
     }
 
-    axios
-      .get("http://localhost:3002/user/verify", { withCredentials: true })
+    axiosInstance
+      .get("/user/verify", { withCredentials: true })
       .then((res) => setUser(res.data.user))
       .catch(() => setUser(null))
       .finally(() => setLoading(false));

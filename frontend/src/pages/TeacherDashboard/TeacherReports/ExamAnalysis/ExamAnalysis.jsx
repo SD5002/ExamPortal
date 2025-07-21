@@ -1,16 +1,8 @@
 import{ useEffect, useState } from "react";
-import axios from "axios";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,} from "recharts";
 import { useParams } from "react-router-dom";
 import "./ExamAnalysis.css";
+import axiosInstance from "../../../../api/axiosInstance";
 
 const ExamAnalysis = () => {
   const { examId } = useParams();
@@ -18,8 +10,8 @@ const ExamAnalysis = () => {
   const [examInfo, setExamInfo] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3002/professor/getAnalysis/${examId}`, {
+    axiosInstance
+      .get(`/professor/getAnalysis/${examId}`, {
         withCredentials: true,
       })
       .then((res) => {

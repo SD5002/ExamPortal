@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './AuthPage.css';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext'; 
@@ -24,7 +24,7 @@ function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
-    axios.post('http://localhost:3002/user/login', {
+    axiosInstance.post('/user/login', {
       email: formData.email,
       password: formData.password
       }, { withCredentials: true })

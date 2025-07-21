@@ -1,6 +1,6 @@
 import  { useState } from 'react';
 import './AuthPage.css';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
@@ -34,7 +34,7 @@ function RegisterPage() {
       return;
     }
     setError('');
-    axios.post( 'http://localhost:3002/user/register',
+    axiosInstance.post( '/user/register',
         {
           name: formData.name,
           email: formData.email,

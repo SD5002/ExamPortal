@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import "./ViewQuestionPaper.css";
+import axiosInstance from "../../../../api/axiosInstance";
 
 const ViewQuestionPaper = () => {
   const { examId } = useParams();
   const [exam, setExam] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3002/professor/getExam/${examId}`, { withCredentials: true })
+    axiosInstance
+      .get(`/professor/getExam/${examId}`, { withCredentials: true })
       .then((res) => setExam(res.data.exam))
       .catch(() => alert("Failed to load exam."));
   }, [examId]);

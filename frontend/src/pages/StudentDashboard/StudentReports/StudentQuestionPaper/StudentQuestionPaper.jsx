@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 import "./StudentQuestionPaper.css";
+import axiosInstance from "../../../../api/axiosInstance";
 
 const StudentQuestionPaper = () => {
   const { examId } = useParams();
   const [response, setResponse] = useState(null);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3002/student/getResponse/${examId}`, { withCredentials: true })
+    axiosInstance
+      .get(`/student/getResponse/${examId}`, { withCredentials: true })
       .then((res) => {
         setResponse(res.data.responses || null);
         console.log(res.data.responses);

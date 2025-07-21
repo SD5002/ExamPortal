@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "../../../components/Calender";
 import 'react-calendar/dist/Calendar.css';
 import "./StudentHome.css";
-import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import axiosInstance from "../../../api/axiosInstance";
 
 function StudentHome() {
   const navigate = useNavigate();
@@ -27,15 +27,15 @@ function StudentHome() {
 
 
    useEffect(() => {
-    axios
-      .get("http://localhost:3002/student/quickReportsForStudentHome", { withCredentials: true })
+    axiosInstance
+      .get("/student/quickReportsForStudentHome", { withCredentials: true })
       .then((res) => {setQuickReportsForHome(res.data); })
       .catch((err) =>console.log(err));
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:3002/student/joinExam', {
+    axiosInstance.post('/student/joinExam', {
      examCode: code,
      examPassword: password
     }, { withCredentials: true })

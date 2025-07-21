@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./StudentReports.css";
+import axiosInstance from "../../../api/axiosInstance";
 
 const StudentReports = () => {
   const [exams, setExams] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3002/student/getReports", { withCredentials: true })
+    axiosInstance
+      .get("/student/getReports", { withCredentials: true })
       .then((res) => {setExams(res.data.data || []);})
       .catch(() => setExams([]));
   }, []);
