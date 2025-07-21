@@ -13,7 +13,7 @@ function TeacherNavbar() {
             <div  className="teacher-navbar-logo"
               onClick={() => navigate("/teacher-dashboard")}
             >
-            {"\uD83E\uDDEA"} GTA
+            🧪 GTA
           </div>
           <div className="teacher-menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
             &#9776;

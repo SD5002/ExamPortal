@@ -12,7 +12,7 @@ function StudentNavbar() {
       <nav className="student-navbar">
         <div className="student-navbar-top">
           <div className="student-navbar-logo" onClick={() => navigate("/student-dashboard")}>
-            {"\uD83E\uDDEA"} GTA
+            🧪 GTA
           </div>
           <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
             &#9776;
