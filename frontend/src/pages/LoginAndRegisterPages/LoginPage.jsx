@@ -27,7 +27,7 @@ function LoginPage() {
     axiosInstance.post('/user/login', {
       email: formData.email,
       password: formData.password
-      }, { withCredentials: true })
+      })
 
       .then((res) => {
         const user = res.data.user;

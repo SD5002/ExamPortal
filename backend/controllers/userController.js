@@ -49,6 +49,7 @@ export const refreshAccessToken = wrapAsync(async (req, res) => {
   const options = {
     httpOnly: true,
     secure: isProduction, 
+    sameSite: "none",
   };
 
   res
@@ -95,6 +96,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const options = {
     httpOnly: true,
     secure: isProduction,
+    sameSite: "none",
   };
 
   
@@ -147,7 +149,8 @@ const isProduction=process.env.NODE_ENV==="production"
   
 const options={
     httpOnly:true,
-    secure:isProduction
+    secure:isProduction,
+    sameSite: "none",
   }
 
   
@@ -181,7 +184,8 @@ export const logout=wrapAsync(async(req,res)=>{
   
   const options={
     httpOnly:true,
-    secure:isProduction
+    secure:isProduction,
+    sameSite: "none",
   }
 
   return res

@@ -21,8 +21,7 @@ mongoose.connect(uri)
   .catch((err) => console.error("DB Connection Error:", err));
 
 app.use(cors({
-  origin:["http://localhost:5173",
-          "https://gta-frontend.onrender.com"] ,
+  origin: "https://gta-frontend.onrender.com" ,
   credentials: true               
 }));
 
